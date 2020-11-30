@@ -11,8 +11,7 @@ import {
 } from '@/helpers/utils';
 import assets from '@/helpers/assets.json';
 import { abi as ierc20Abi } from '@/helpers/abi/IERC20.json';
-import { abi as factoryAbi } from '@/helpers/abi/Factory.json';
-import { abi as synthAbi } from '@/helpers/abi/Synthetic.json';
+import { abi as mimirTokenSale } from '@/helpers/abi/mimirTokenSale.json';
 
 const parseEther = ethers.utils.parseEther;
 
@@ -31,7 +30,6 @@ const state = {
   balance: 0,
   network: {},
   exchangeRates: {},
-  potions: [],
   allowances: {},
   balances: {}
 };
@@ -69,8 +67,6 @@ const actions = {
         const balance = await provider.getBalance(address);
         const network = await provider.getNetwork();
         commit('set', { address });
-        await dispatch('loadPotions');
-        await dispatch('loadAllowances');
         commit('set', {
           name,
           balance: ethers.utils.formatEther(balance),
@@ -91,11 +87,7 @@ const actions = {
     const exchangeRates = await getExchangeRatesFromCoinGecko();
     commit('set', { exchangeRates });
   },
-  async loadPotions({ commit }) {
-    const potions = await getPotions(state.address);
-    console.log('Your potions', potions);
-    commit('set', { potions });
-  },
+
   async loadAllowances({ commit }) {
     const daiAddress = process.env.VUE_APP_DAI_ADDRESS;
     const addresses = [daiAddress];
@@ -107,12 +99,7 @@ const actions = {
     console.log('Your allowances', allowances);
     commit('set', { allowances });
   },
-  async revitalisePotion({ commit }, payload) {
-    await revitalisePotion(payload);
-  },
-  async withdrawPotion({ commit }, payload) {
-    await withdrawPotion(payload);
-  },
+
   async approve({ commit }) {
     const factoryAddress = process.env.VUE_APP_FACTORY_ADDRESS;
     const address = process.env.VUE_APP_DAI_ADDRESS;
@@ -124,69 +111,18 @@ const actions = {
     console.log(tx.hash);
     await tx.wait();
   },
-  async approvePotion({ commit }, address) {
-    const factoryAddress = process.env.VUE_APP_FACTORY_ADDRESS;
+  async SendEther({ commit }, payload) {
+    const crowdSale = await new ethers.Contract(payload.address, mimirTokenSale, provider);
     const signer = provider.getSigner();
-    // @ts-ignore
-    const potionToken = new ethers.Contract(address, synthAbi, provider);
-    const potionTokenWithSigner = potionToken.connect(signer);
-    const tx = await potionTokenWithSigner.approve(factoryAddress, parseEther((1e7).toString()));
-    console.log(tx.hash);
-    await tx.wait();
+    await signer.sendTransaction({to:crowdSale.address, value:ethers.utils.parseEther(payload.value.toString())})
   },
-  async writeMintPotion({ commit, dispatch }, payload) {
-    const factoryAddress = process.env.VUE_APP_FACTORY_ADDRESS;
-    const finderAddress = process.env.VUE_APP_FINDER_ADDRESS;
-    const tokenFactoryAddress = process.env.VUE_APP_TOKEN_FACTORY_ADDRESS;
-    const timerAddress = process.env.VUE_APP_TOKEN_FACTORY_ADDRESS;
-    const daiAddress = process.env.VUE_APP_DAI_ADDRESS;
-    const poolLpAddress = process.env.VUE_APP_POOL_LP_ADDRESS;
-    const signer = provider.getSigner();
-    // @ts-ignore
-    const factory = new ethers.Contract(factoryAddress, factoryAbi, provider);
-    const factoryWithSigner = factory.connect(signer);
-    const ticker = assets[payload.asset].ticker;
 
-    const [year, month, day] = payload.expiry.split('-');
-    const expiryDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day) + 1);
-    const expirationTimestamp = parseInt((expiryDate.getTime() / 1000).toString()).toString();
-    const syntheticName = `${ticker} Potion ${payload.expiry}`;
-    const syntheticSymbol = `${ticker}POT`;
-    const params = {
-      expirationTimestamp,
-      withdrawalLiveness: '1',
-      collateralAddress: daiAddress,
-      finderAddress,
-      tokenFactoryAddress,
-      priceFeedIdentifier: 'UMATEST',
-      syntheticName,
-      syntheticSymbol,
-      liquidationLiveness: '1',
-      collateralRequirement: { rawValue: parseEther('1.0') },
-      disputeBondPct: { rawValue: parseEther('0.1') },
-      sponsorDisputeRewardPct: { rawValue: parseEther('0.1') },
-      disputerDisputeRewardPct: { rawValue: parseEther('0.1') },
-      strikePrice: { rawValue: parseEther(payload.strike) },
-      assetPrice: { rawValue: parseEther(payload.price) },
-      assetClass: ticker,
-      timerAddress
-    };
-    const tx = await factoryWithSigner.writeMintPotion(
-      params,
-      poolLpAddress,
-      { rawValue: parseEther(payload.quantity) },
-      { rawValue: parseEther(payload.premium) }
-    );
-    console.log(tx.hash);
-    await tx.wait(1);
-    await dispatch('loadPotions');
-  },
   async loadBalanceIn({ commit }, payload) {
-    const potionToken = new ethers.Contract(payload, synthAbi, provider);
+    /*const potionToken = new ethers.Contract(payload, synthAbi, provider);
     const balance = await potionToken.balanceOf(state.address);
     const balances = state.balances;
     balances[payload] = parseFloat(ethers.utils.formatEther(balance));
-    commit('set', { balances });
+    commit('set', { balances });*/
   }
 };
 

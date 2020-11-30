@@ -5,7 +5,7 @@
         <div class="flex-auto text-left">
           <router-link :to="{ name: 'home' }">
             <div class="row">
-                <img src="~/@/assets/logo.svg" class="logo" />
+              <img src="~/@/assets/logo.svg" class="logo" />
               <h1 class="py-4">
                 $MIMIR
               </h1>
@@ -20,20 +20,13 @@
           <a v-else class="circle-button button button-primary" @click="modalLoginOpen = true">
             Connect wallet
           </a>
-          <a
-            class="button button-info ml-2 d-inline-block hide-sm"
-            target="_blank"
-            href="https://docs.potion.finance"
-          >
-            ?
-          </a>
         </div>
       </div>
       <div class="pt-4 pb-10">
         <h1 class="mx-auto container-md p-responsive ">Mimir Solutions</h1>
         <div class="countdown-box">
           <div>
-            <flip-countdown deadline="2018-12-25 00:00:00"></flip-countdown>
+            <flip-countdown deadline="2020-12-1 14:00:00"></flip-countdown>
           </div>
         </div>
       </div>

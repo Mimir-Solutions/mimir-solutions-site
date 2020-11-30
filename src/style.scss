@@ -145,10 +145,17 @@ nav{
   min-width: auto;
 }
 
-
+.countdown-box{
+  margin-top:1rem;
+}
 
 .flip-card__top{
+  color:$primary!important;
   background:$secondary!important;
+}
+.flip-card__bottom{
+  color:$primary!important;
+  background:$bg-color!important;
 }
 
 .button-select {
@@ -180,11 +187,11 @@ nav{
 }
 
 .mainnav {
-  height: 58px;
+  height: 62px;
   line-height: 0;
-  border-radius: 29px;
+  border-radius: 31px;
   overflow:hidden;
-  border:2px solid $secondary;
+  border:4px solid $secondary;
   background-color: $bg-disabled;
   display: inline-block;
   box-shadow:0px 0px 10px black;
@@ -254,6 +261,8 @@ input.input:read-only {
     background-color: white;
   }
 }
+.shell{  background-color: #52576a;
+}
 
 .block {
   @extend .container-sm;
@@ -261,11 +270,11 @@ input.input:read-only {
   @extend .py-6;
   @extend .px-4;
   @extend .mb-4;
-  border:2px solid $primary;
+  border:4px solid $primary;
   box-shadow:0px 0px 10px black;
   border-radius:1rem;
   width:500px;height:500px;
-  z-index:1;
+  z-index:0;
   position:relative;
   background-color: #52576aaa;
   box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);

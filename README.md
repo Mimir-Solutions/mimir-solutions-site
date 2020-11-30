@@ -33,3 +33,6 @@ Connected wallet amount paid - MimirBondingCurveSale.provided(msg.sender)
 Connected wallet amount of $MIMIR bought using bonding price curve - forumula found in MimirBondingCurveSale.claim
 Current price of $MIMIR based on bonding price curve forumula
 Price at listing based on 1250 $MIMIR and 50% of ETH rpoceeds in lquidity.
+
+Projects tab has linst to projects placeholder pages
+6 Project placeholder pages.

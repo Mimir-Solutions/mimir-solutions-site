@@ -32,12 +32,11 @@
       <div class="pt-4 pb-10">
         <h1 class="mx-auto container-md p-responsive ">Mimir Solutions</h1>
         <div class="countdown-box">
-              <div>
-                <flip-countdown deadline="2018-12-25 00:00:00"></flip-countdown>
-              </div>
-            </div>
+          <div>
+            <flip-countdown deadline="2018-12-25 00:00:00"></flip-countdown>
+          </div>
+        </div>
       </div>
-      
     </div>
     <div class="mb-4 mt-n4">
       <div class="mainnav">

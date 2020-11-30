@@ -26,6 +26,7 @@
         <h1 class="mx-auto container-md p-responsive ">Mimir Solutions</h1>
         <div class="countdown-box">
           <div>
+            <p>sale ends in:</p>
             <flip-countdown deadline="2020-12-1 14:00:00"></flip-countdown>
           </div>
         </div>

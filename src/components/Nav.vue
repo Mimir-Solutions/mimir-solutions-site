@@ -17,7 +17,7 @@
             <span class="login-bullet mr-2 ml-n2" />
             {{ name || shorten(address) }}
           </a>
-          <a v-else class="button button-primary" @click="modalLoginOpen = true">
+          <a v-else class="circle-button button button-primary" @click="modalLoginOpen = true">
             Connect wallet
           </a>
           <a
@@ -31,7 +31,13 @@
       </div>
       <div class="pt-4 pb-10">
         <h1 class="mx-auto container-md p-responsive ">Mimir Solutions</h1>
+        <div class="countdown-box">
+              <div>
+                <flip-countdown deadline="2018-12-25 00:00:00"></flip-countdown>
+              </div>
+            </div>
       </div>
+      
     </div>
     <div class="mb-4 mt-n4">
       <div class="mainnav">
@@ -53,6 +59,8 @@
 <script>
 import { mapState } from 'vuex';
 import { shorten } from '@/helpers/utils';
+import FlipCountdown from 'vue2-flip-countdown'
+
 
 export default {
   data() {
@@ -60,6 +68,8 @@ export default {
       modalLoginOpen: false
     };
   },
+  components: { FlipCountdown },
+
   computed: mapState({
     name: state => state.settings.name,
     address: state => state.settings.address

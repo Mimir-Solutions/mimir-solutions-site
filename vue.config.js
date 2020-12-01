@@ -1,8 +1,8 @@
 module.exports = {
   outputDir: './docs',
   devServer: {
-    port: 4545,
-    host: "45.56.83.209",
+    port: 8080,
+    host: "127.0.0.1",
   }
 
 };

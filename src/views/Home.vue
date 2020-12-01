@@ -2,17 +2,16 @@
   <div class="block">
     <img src="~/@/assets/logo.svg" class="mb-2 logo" />
     <h2 class="mb-4">MIMIR SOLUTIONS</h2>
-    <p class="mb-6">Engage The Contract</p>
-    <p>Cap Reached in {{ $store.state.settings.remainingEth }} ETH</p>
-    <p></p>
-    <p>
+    <p class="mb-2">Engage The Contract</p>
+    <p class="mb-2">Cap Reached in {{ $store.state.settings.remainingEth }} ETH</p>
+    <p class="mb-2">
       Balance: <span class="hasEffect" @click="maxStake">{{ $store.state.settings.balance }}</span>
     </p>
-    <p>
+    <p class="mb-4">
       Mimir Claim: <span>{{ $store.state.settings.claim }}</span>
     </p>
     <form @submit.prevent="handleSubmit" class="form">
-      <div class="mb-4">
+      <div class="mb-0">
         <div class="input d-block mb-4">
           <div class="row">
             <img src="~/@/assets/ETH.png" height="16px" class="eth-img" alt="" />

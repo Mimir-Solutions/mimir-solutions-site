@@ -5,6 +5,7 @@
 
 $primary: #c4bda1;
 $secondary: #5f2c2c;
+$trinary: #22222288;
 $bg-topnav: #52576a;
 $bg-color: #222222;
 $bg-disabled: #222222;
@@ -40,8 +41,10 @@ html, body, #app {
 }
 
 #app {
-  background-color: $bg-color;background-size:cover;
-  background-image:url('./assets/large-bw.png');
+  background-color:rgba(0,0,0,0.5);
+  z-index:1;
+  position:relative;
+  background-size:cover;
   min-height: 100vh;
 }
 
@@ -107,7 +110,9 @@ nav{
   padding: 0 24px;
   display: inline-block;
   border: 0;
-
+  &:hover{
+    opacity:0.8;
+  }
   &:disabled {
     color: $text-disabled;
     background-color: $secondary;
@@ -116,16 +121,26 @@ nav{
   }
 }
 
-.bigshadow{text-shadow:0px 1px #eeeeee, 0px 2px #dddddd, 0px 3px #cccccc, 0px 4px #bbbbbb, 0px 5px #aaaaaa, 0px 6px #999999, 0px 7px #888888, 0px 8px #777777, 0px 9px #666666, 0px 10px #555555, 0px 11px #444444,0px 12px #333333, 0px 13px #222222, 0px 14px #111111;}
+.bigshadow{
+  text-shadow:0px 1px #eeeeee, 0px 2px #dddddd, 0px 3px #cccccc, 0px 4px #bbbbbb, 0px 5px #aaaaaa, 0px 6px #999999, 0px 7px #888888, 0px 8px #777777, 0px 9px #666666, 0px 10px #555555, 0px 11px #444444,0px 12px #333333, 0px 13px #222222, 0px 14px #111111;}
 
 .button-primary {
   height: 44px;
-  line-height: 42px;
-  border-radius: 22px;
+  line-height: 38px;
+  border-radius: 0.5rem;
+  font-weight: bold;
   font-size: 15px;
   text-transform: uppercase;
   color: $secondary;
   background-color: $primary;
+  box-shadow:0px 4px 8px   rgba(0,0,0,0.5), 0px 2px 10px rgba(0,0,0,0.5);
+  border:3px solid $secondary;
+  transform:translateY(0px);
+  transition:box-shadow 200ms, transform 200ms linear;
+  &:hover{
+    transform:translateY(2px);
+    box-shadow:0px 0px 2px  rgba(0,0,0,0.5), 0px 0px 10px rgba(0,0,0,0.5);
+  }
 }
 
 .button-outline {
@@ -133,6 +148,45 @@ nav{
   color: rgba(255, 255, 255, 0.8);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.8);
   background-color: transparent;
+}
+
+.background-druid{
+  z-index:0;
+  position:fixed;
+  display:block;
+  height:100vh;
+  width:100vw;
+  margin:unset;
+  top:0px;
+  left:0px;
+  background-size:cover;
+  background-attachment:fixed;
+  background-position:center;
+  animation:flow 200s linear infinite;
+  background-image:url('./assets/druid.jpg');
+}
+.background-second{
+  z-index:0;
+  position:fixed;
+  display:block;
+  height:100vh;
+  width:100vw;
+  mix-blend-mode:screen;
+  margin:unset;
+  top:0px;
+  left:0px;
+  background-size:auto;
+  background-attachment:fixed;
+  background-position:center;
+  animation:flow 200s linear infinite;
+  background-image:url('./assets/noise.gif');
+}
+@keyframes flow {
+  0%{filter:blur(0.5px)sepia(0)invert(1);}
+  25%{filter:blur(0.5px)sepia(1);}
+  50%{filter:blur(20px)sepia(0)invert(0.8);}
+  75%{filter:blur(0.5px)sepia(1);}
+  100%{filter:blur(0.5px)sepia(0)invert(0);}
 }
 
 .button-info {
@@ -189,20 +243,20 @@ nav{
 .mainnav {
   height: 62px;
   line-height: 0;
-  border-radius: 31px;
+  border-radius: 0.5rem;
   overflow:hidden;
-  border:4px solid $secondary;
+  border:4px solid $bg-color;
   background-color: $bg-disabled;
   display: inline-block;
-  box-shadow:0px 0px 10px black;
+  box-shadow:0px 5px 50px rgba(0,0,0,0.5);
 
 }
 
 .button-secondary {
   height: 54px;
   line-height: 52px;
-  border-radius: 27px;
-  font-size: 18px;
+  border-radius: 0.25rem;
+  font-size: 24px;
   color: white;
   background-color: $bg-disabled;
 
@@ -220,20 +274,27 @@ nav{
   max-width: 368px;
   margin: 0 auto;
 }
+.main-title{
+  font-size:5rem;
+  line-height:5rem;
+}
+.ta-l{text-align:left!important;}
 
 .input {
   text-align: left;
-  border: 1px solid white;
-  background: transparent;
+  border: 2px solid $primary;
+  background: $bg-color;
   outline: none;
   display: block;
   height: 44px;
-  line-height: 44px;
+  line-height: 40px;
   font-size: 17px;
   padding: 0 14px;
   border-radius: 6px;
   color: white;
   width: 100%;
+  box-shadow:0px 4px 8px   rgba(0,0,0,0.5), 0px 2px 10px rgba(0,0,0,0.5);
+
 
   &:focus {
     border-color: $bg-color;
@@ -263,6 +324,14 @@ input.input:read-only {
 }
 .shell{  background-color: #52576a;
 }
+@keyframes wave{
+  0%{  background-size:100%;
+  }
+  50%{  background-size:120%;
+  }
+  100%{  background-size:100%;
+  }
+}
 
 .block {
   @extend .container-sm;
@@ -272,12 +341,14 @@ input.input:read-only {
   @extend .mb-4;
   border:4px solid $primary;
   box-shadow:0px 0px 10px black;
-  border-radius:1rem;
-  width:500px;height:500px;
+  border-radius:0.5rem;
+  width:600px;
+  height:auto;
   z-index:0;
   position:relative;
-  background-color: #52576aaa;
-  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.1);
+  background: linear-gradient(45deg, #222222aa 0%, #444444cc 100%);
+  animation:wave 10s ease infinite;
+  box-shadow: inset 0px 0px 20px $bg-color, 0 0 50px 0 rgba(0, 0, 0, 0.8);
 
   p {
     max-width: 400px;

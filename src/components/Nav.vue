@@ -22,8 +22,8 @@
           </a>
         </div>
       </div>
-      <div class="pt-4 pb-10">
-        <h1 class="mx-auto container-md p-responsive ">Mimir Solutions</h1>
+      <div class="pt-0 pb-6">
+        <h1 class="mx-auto container-md p-responsive main-title">Mimir Solutions</h1>
         <div class="countdown-box">
           <div>
             <p>sale ends in:</p>

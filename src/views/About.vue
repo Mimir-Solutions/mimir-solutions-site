@@ -14,17 +14,5 @@
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      form: {
-        potion: ''
-      },
-      modalWithdrawOpen: false,
-      modalLoginOpen: false,
-      modalRevitalizeOpen: false,
-      potions: this.$store.state.settings.potions
-    };
-  }
-};
+export default {};
 </script>

@@ -12,4 +12,5 @@ $KNOW is intended to be the community governance skill validation token and educ
 </template>
 
 <script>
+export default {}
 </script>

@@ -10,7 +10,6 @@ const routes: Array<RouteConfig> = [
   { path: '/', name: 'home', component: Home },
   { path: '/about', name: 'about', component: About },
   { path: '/projects', name: 'projects', component: Projects }
-
 ];
 
 const router = new VueRouter({

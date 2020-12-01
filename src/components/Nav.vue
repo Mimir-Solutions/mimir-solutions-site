@@ -52,8 +52,7 @@
 <script>
 import { mapState } from 'vuex';
 import { shorten } from '@/helpers/utils';
-import FlipCountdown from 'vue2-flip-countdown'
-
+import FlipCountdown from 'vue2-flip-countdown';
 
 export default {
   data() {

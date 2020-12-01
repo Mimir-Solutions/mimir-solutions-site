@@ -5,7 +5,7 @@
       <Nav />
       <router-view :key="$route.path" />
     </div>
- </div>
+  </div>
 </template>
 
 <script>

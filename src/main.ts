@@ -8,10 +8,10 @@ import store from '@/store';
 import { formatTs } from '@/helpers/utils';
 import messages from '@/helpers/messages.json';
 import numberFormats from '@/helpers/number.json';
-import VueParticles from 'vue-particles'
+import VueParticles from 'vue-particles';
 import '@/style.scss';
 
-Vue.use(VueParticles)
+Vue.use(VueParticles);
 Vue.use(VueUi);
 Vue.use(VueI18n);
 const i18n = new VueI18n({ locale: 'en', messages, numberFormats });

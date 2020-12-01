@@ -3,7 +3,6 @@
     <img src="~/@/assets/logo.svg" class="mb-2 logo" />
     <h2 class="mb-4">About Mimir</h2>
     <p class="mb-6">Lorem Ipsum</p>
-   
   </div>
 </template>
 

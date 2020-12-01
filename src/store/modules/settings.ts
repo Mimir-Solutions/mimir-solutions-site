@@ -24,10 +24,15 @@ if (ethereum) {
 }
 
 const state = {
+  saleAddr: '0xb72027693a5b717b9e28ea5e12ec59b67c944df7',
   loading: false,
   address: null,
   name: '',
   balance: 0,
+  claim: 0,
+  minimumEth: 0,
+  providedEth: 0,
+  remainingEth: 0,
   network: {},
   exchangeRates: {},
   allowances: {},
@@ -73,6 +78,7 @@ const actions = {
           network,
           loading: false
         });
+        await dispatch('calculateRemainingEther');
       } catch (error) {
         console.error(error);
       }
@@ -88,18 +94,6 @@ const actions = {
     commit('set', { exchangeRates });
   },
 
-  async loadAllowances({ commit }) {
-    const daiAddress = process.env.VUE_APP_DAI_ADDRESS;
-    const addresses = [daiAddress];
-    Object.entries(state.potions).forEach(potion => {
-      // @ts-ignore
-      addresses.push(potion[1].address);
-    });
-    const allowances = await getAllowances(state.address, addresses);
-    console.log('Your allowances', allowances);
-    commit('set', { allowances });
-  },
-
   async approve({ commit }) {
     const factoryAddress = process.env.VUE_APP_FACTORY_ADDRESS;
     const address = process.env.VUE_APP_DAI_ADDRESS;
@@ -112,11 +106,33 @@ const actions = {
     await tx.wait();
   },
   async SendEther({ commit }, payload) {
-    const crowdSale = await new ethers.Contract(payload.address, mimirTokenSale, provider);
+    const crowdSale = await new ethers.Contract(state.saleAddr, mimirTokenSale, provider);
     const signer = provider.getSigner();
-    await signer.sendTransaction({to:crowdSale.address, value:ethers.utils.parseEther(payload.value.toString())})
+    await signer.sendTransaction({
+      to: crowdSale.address,
+      value: ethers.utils.parseEther(payload.value.toString())
+    });
   },
-
+  async calculateRemainingEther({ commit }) {
+    const crowdSale = await new ethers.Contract(state.saleAddr, mimirTokenSale, provider);
+    const minimumEth = await crowdSale.MINIMAL_PROVIDE_AMOUNT();
+    const providedEth = await provider.getBalance(state.saleAddr);
+    const remainingEth = minimumEth - providedEth;
+    commit('set', {
+      remainingEth: ethers.utils.formatEther(remainingEth.toString()),
+      minimumEth: ethers.utils.formatEther(minimumEth),
+      providedEth: ethers.utils.formatEther(providedEth)
+    });
+  },
+  async calculateClaim({ commit }) {
+    const crowdSale = await new ethers.Contract(state.saleAddr, mimirTokenSale, provider);
+    const signer = provider.getSigner();
+    const totalProvided = await crowdSale.totalProvided();
+    const totalDistributeAmount = await crowdSale.TOTAL_DISTRIBUTE_AMOUNT();
+    const userProvided = await crowdSale.provided(signer.address);
+    const claim = (totalDistributeAmount * totalDistributeAmount) / userProvided;
+    commit('set', { claim: ethers.utils.formatEther(claim.toString()) });
+  },
   async loadBalanceIn({ commit }, payload) {
     /*const potionToken = new ethers.Contract(payload, synthAbi, provider);
     const balance = await potionToken.balanceOf(state.address);
